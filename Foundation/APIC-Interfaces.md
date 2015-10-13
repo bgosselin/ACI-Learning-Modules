@@ -54,9 +54,9 @@ Issuing this command in the SSH client, we see that we are actually just using t
 
 So, we can also very easily confirm that our ‘myVRF’ private-network was created with the following:
 
-‘’’
+```
 	ls /aci/tenants/ExampleCliTenant/networking/private-networks/
-‘’’
+```
 
 
 ##Application Program Interface##
