@@ -40,7 +40,7 @@ First, we’ll create a new tenant called ‘ExampleCliTenant’.  To do so we�
 
 Now that the tenant had been created in the APIC, we will change directories in the APIC to the private-network folder where will create a new private network (or VRF). Just as with the tenant, we will create it as a managed object and commit this configuration to the controller.
  
-![CLI-CreateVRF](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-CreatVRF.png)
+![CLI-CreateVRF](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-CreateVRF.png)
 
 We can confirm the tenant has been created with the following:
 
