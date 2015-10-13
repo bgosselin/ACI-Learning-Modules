@@ -38,6 +38,7 @@ You can write Markdown in a plain text editor but there are many desktop and web
 - Easy to use lightweight environement for coding (or writing Markdown)
 - Available on MAC, Linux or Windowns
 - Github integration
+- Great Markdown preview features native in the editor
 - Very intuitive operation and structure
 
 [Download](https://code.visualstudio.com/)

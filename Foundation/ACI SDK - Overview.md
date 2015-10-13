@@ -1,1 +1,18 @@
-WIP (bgosselin)
+#**Module:** ACI SDK - Overview#
+
+
+##Learning Objectives##
+After Completing this module you will be able to:
+
+
+
+##Software Development Kit (SDK)##
+For those newer to programming, you will likely soon be aquianted with the notion of Software Development Kits (or SDK's).  At its core an SDK is simply a collection of useful features (classes and functions) created by a third party for use within your project. There is no official definition of what makes an SDK but typically it inolved a set of libraries, code samples and documentation in portable formate so it can be imported into your porject. A quick google search will demonstrate that SDK's exist for a wide variety of programming languages and use cases.
+
+A good SDK is similar to an API in that it should abstract the underlying complexity and a provide a standard set of functions for users to take advantage of the underlying features.
+
+
+##ACI Cobra SDK##
+Cisco has developed the Cobra SDK for ACI.  This is a Python SDK designed to abstract some of the Monotonous tasks in the API calls we've been using for the last few modules.  The SDK provides functions to login, configure and troubleshoot ACI - making it simpler to write scripts and programs for the APIC.  The underlying functionality in the SDK leverages the APIC API just as we have done up to this point. However, just as the GUI is program built on top of the API to enhanse the user experience, so to is the Cobra SDK.
+
+![APIC-Interfaces] (https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/ACI%20SDK%20-%20Overview%20-%20Pictures/APIC-Interfaces.png)  

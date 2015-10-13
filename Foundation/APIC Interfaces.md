@@ -3,7 +3,7 @@
 
 ##Learning Objectives##
 
-After Completing this unit you will be able to:
+After Completing this module you will be able to:
 - Identify the main interfaces to the APIC Controller
 - Execute basic commands to the APIC controller using the Command Line Interface
 - Execute basic commands to the APIC controller using the Application Program Interface
@@ -144,6 +144,8 @@ To maintain your session, you must send login refresh messages to the API if no 
 
 
 The response should include a status 200.
+
+**Note** that if you do not send the next command before the session timeout, you will need to issue the login command again.
 
 Now that we have logged into the APIC, we’ll create a new Tenant named ‘ExampleApiTenant’ by executing the following call in Postman:
 
