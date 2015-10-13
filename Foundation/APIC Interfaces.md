@@ -1,5 +1,6 @@
 #**Module:**Communicating with the APIC#
 
+
 ##Learning Objectives##
 
 After Completing this unit you will be able to:
@@ -22,7 +23,7 @@ There are three primary ways to access the APIC
 
 Note that while there are three ways to access the APIC, there is actually only two interfaces, the CLI and API.  The GUI is actually a separate Web-based application hosted on the APIC which leverage the API to interface with the internal data model housed in the controller. We’ll discuss both the CLI and API this module but focus on the API going forward.
  
-![APIC-Interfaces](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/APIC-Interfaces.png)
+![APIC-Interfaces](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/APIC-Interfaces.png)
 
 
 
@@ -38,19 +39,19 @@ To highlight this interface, we will log into the APIC and create a new VRF inst
 
 Once logged in, you will see the command prompt for the APIC:
  
-![CLI-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-Login.png)
+![CLI-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-Login.png)
 
 
 
 First, we’ll create a new tenant called ‘ExampleCliTenant’.  To do so we’ll navigate to the tenants directory on the APIC. Once in the folder we’ll create this tenant as a new managed object and commit this configuration. We’ll discuss managed objects in more detail in the next module, for now we’ll just focus on the interfaces.
  
-![CLI-CreateTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-CreateTenant.png)
+![CLI-CreateTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-CreateTenant.png)
 
 
 
 Now that the tenant had been created in the APIC, we will change directories in the APIC to the private-network folder where will create a new private network (or VRF). Just as with the tenant, we will create it as a managed object and commit this configuration to the controller.
  
-![CLI-CreateVRF](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-CreateVRF.png)
+![CLI-CreateVRF](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-CreateVRF.png)
 
 
 
@@ -64,7 +65,7 @@ We can confirm the tenant has been created with the following:
 
 Issuing this command in the SSH client, we see that we are actually just using the Linux command to view the contents of the Tenants directory in the APIC
     
-![CLI-ShowTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-ShowTenant.png)
+![CLI-ShowTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-ShowTenant.png)
 
 
 
@@ -92,7 +93,7 @@ Note, before using Postman with the APIC, it may be necessary to accept the APIC
 
 Click on ‘Proceed to <IP-of-APIC> (unsafe)’
  
-![Postman-AcceptCert](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/Postman-AcceptCert.png)
+![Postman-AcceptCert](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-AcceptCert.png)
 
 
 
@@ -118,7 +119,7 @@ We’ll get into the specifics of the ACI API in the next module, for now let’
 ```
 The REST call in Postman should match the following:
  
-![Postman-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/Postman-Login.png)
+![Postman-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-Login.png)
 
 
 
@@ -126,7 +127,7 @@ You can confirm the REST call was successful with the response Code.  In the pic
 
 When a login message is accepted, the API returns a data structure that includes a session timeout period in seconds and a token that represents the session. The token is also returned as a cookie in the HTTP response header. 
  
-![Postman-LoginResponse](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/Postman-LoginResponse.png)
+![Postman-LoginResponse](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-LoginResponse.png)
 
 
 
@@ -206,7 +207,7 @@ This API call should return a JSON model for each of the tenants in the APIC.  Y
 
 In this case it will be ‘uni/tn-ExampleApiTenant’.
 
-![API-TenantDistinguishedName](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/API-TenantDistinguishedName.png)
+![API-TenantDistinguishedName](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/API-TenantDistinguishedName.png)
 
 
 
@@ -229,7 +230,7 @@ Again, we should see a JSON model in which the Distinguished Name containts:
 ```
 
 
-![API-VRFDistinguishedName](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/API-VRFDistinguishedName.png)
+![API-VRFDistinguishedName](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/API-VRFDistinguishedName.png)
 
 
 
