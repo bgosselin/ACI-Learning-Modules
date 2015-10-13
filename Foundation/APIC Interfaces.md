@@ -3,8 +3,12 @@
 ##Learning Objectives##
 
 After Completing this unit you will be able to:
-- Understand how logical and physical devices
 - Identify the main interfaces to the APIC Controller
+- Execute basic commands to the APIC controller using the Command Line Interface
+- Execute basic commands to the APIC controller using the Application Program Interface
+- Understand how the Graphic User Interface communications with the Controller
+
+
 
 
 ##ACI Interfaces##
@@ -21,6 +25,8 @@ Note that while there are three ways to access the APIC, there is actually only 
 ![APIC-Interfaces](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/APIC-Interfaces.png)
 
 
+
+
 ##Command Line Interface##
 
 Network Engineers have a great deal of experience in using a CLI to interact with network equipment.  While the commands and features of ACI differ from traditional switch operating systems, such as IOS or NX-OS, the method of interaction is the same.
@@ -34,13 +40,19 @@ Once logged in, you will see the command prompt for the APIC:
  
 ![CLI-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-Login.png)
 
+
+
 First, we’ll create a new tenant called ‘ExampleCliTenant’.  To do so we’ll navigate to the tenants directory on the APIC. Once in the folder we’ll create this tenant as a new managed object and commit this configuration. We’ll discuss managed objects in more detail in the next module, for now we’ll just focus on the interfaces.
  
 ![CLI-CreateTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-CreateTenant.png)
 
+
+
 Now that the tenant had been created in the APIC, we will change directories in the APIC to the private-network folder where will create a new private network (or VRF). Just as with the tenant, we will create it as a managed object and commit this configuration to the controller.
  
 ![CLI-CreateVRF](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-CreateVRF.png)
+
+
 
 We can confirm the tenant has been created with the following:
 
@@ -48,15 +60,21 @@ We can confirm the tenant has been created with the following:
 	show tenant
 ```
 
+
+
 Issuing this command in the SSH client, we see that we are actually just using the Linux command to view the contents of the Tenants directory in the APIC
     
 ![CLI-ShowTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/CLI-ShowTenant.png)
+
+
 
 So, we can also very easily confirm that our ‘myVRF’ private-network was created with the following:
 
 ```
 	ls /aci/tenants/ExampleCliTenant/networking/private-networks/
 ```
+
+
 
 
 ##Application Program Interface##
@@ -71,9 +89,12 @@ Note, before using Postman with the APIC, it may be necessary to accept the APIC
 	https://<IP-of-APIC>
 ```
 
+
 Click on ‘Proceed to <IP-of-APIC> (unsafe)’
  
 ![Postman-AcceptCert](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/Postman-AcceptCert.png)
+
+
 
 We’ll get into the specifics of the ACI API in the next module, for now let’s focus the specifics of creating and confirming a new Tenant and VRF.  Open the Postman browser add-on and execute the following by clicking the send button:
 
@@ -99,11 +120,15 @@ The REST call in Postman should match the following:
  
 ![Postman-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/Postman-Login.png)
 
+
+
 You can confirm the REST call was successful with the response Code.  In the picture below, the response code is the well-known value, 200 – indicating the REST call was successfully received and a response returned. 
 
 When a login message is accepted, the API returns a data structure that includes a session timeout period in seconds and a token that represents the session. The token is also returned as a cookie in the HTTP response header. 
  
 ![Postman-LoginResponse](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/Postman-LoginResponse.png)
+
+
 
 To maintain your session, you must send login refresh messages to the API if no other messages are sent for a period longer than the session timeout period. To send a refresh message, execute the following in Postman:
 
@@ -115,6 +140,7 @@ To maintain your session, you must send login refresh messages to the API if no 
 - **Header:** None
 - **Authentication:** None
 - **Body:** None
+
 
 The response should include a status 200.
 
@@ -138,6 +164,7 @@ Now that we have logged into the APIC, we’ll create a new Tenant named ‘Exam
 	}
 ```
 
+
 Check for a status 200 response from this previous command. If the REST call was successful, we can add a private-network instance, named ‘myVRF’ by executing the following command:
 
 - **URL:** 
@@ -158,6 +185,7 @@ Check for a status 200 response from this previous command. If the REST call was
 	}
 ```
 
+
 Similar to the CLI implementation, lets confirm that the Tenant and private-network were created.  First we can confirm the tenant by executing the following:
 - **URL:** 
 ```
@@ -168,15 +196,19 @@ Similar to the CLI implementation, lets confirm that the Tenant and private-netw
 - **Authentication:** None
 - **Body:** None
 
+
 This API call should return a JSON model for each of the tenants in the APIC.  You should be able to note one of the results which contain a Distinguished Name (DN) with the value:
 
 ```
 	uni/tn-<name-of-tenant>
 ```
 
+
 In this case it will be ‘uni/tn-ExampleApiTenant’.
 
 ![API-TenantDistinguishedName](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/API-TenantDistinguishedName.png)
+
+
 
 To confirm the private-network was created, execute the following:
 
@@ -189,15 +221,22 @@ To confirm the private-network was created, execute the following:
 - **Authentication:** None
 - **Body:** None
 
+
 Again, we should see a JSON model in which the Distinguished Name containts:
 
 ```
  	uni/tn-<name-of-tenant>/ctx-<name-of-private-network>
 ```
 
+
 ![API-VRFDistinguishedName](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC-Interfaces-Pictures/API-VRFDistinguishedName.png)
 
+
+
 We have now successfully created a new Tenant and private-network using the APIC API.  In the next module explore these API calls in detail.
+
+
+
 
 ##Graphic User Interface##
 
