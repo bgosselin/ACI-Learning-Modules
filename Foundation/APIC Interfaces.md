@@ -1,4 +1,4 @@
-#**Module:**Communicating with the APIC#
+#**Module:** APIC Interfaces#
 
 
 ##Learning Objectives##
