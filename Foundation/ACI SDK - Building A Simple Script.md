@@ -1,4 +1,4 @@
 WIP (bgosselin)
 
-- Recreate of of the earlier scripts/calls using the SDK
+- Recreate some of the earlier scripts/calls using the SDK
 - Show the SDK documentation

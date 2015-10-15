@@ -95,35 +95,40 @@ Click on ‘Proceed to <IP-of-APIC> (unsafe)’
  
 ![Postman-AcceptCert](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-AcceptCert.png)
 
+We can now open Postman browser add-on to execute a RESTful API call.  During this module and subsequent ones we will not included any headers in our REST calls.  Some of our calls will require a body (or payload) and some will note.  To represent these componenets of our REST commands, we will use the following formate:
 
-
-We’ll get into the specifics of the ACI API in the next module, for now let’s focus the specifics of creating and confirming a new Tenant and VRF.  Open the Postman browser add-on and execute the following by clicking the send button:
-
-- **URL:** 
 ```
-	https://<IP-of-APIC>/api/aaLogin.json
+<HTTP verb (GET, POST, PUT, DELETE)> <URL>
+{
+	JSON Body included here if one is required...
+} 
 ```
-- **Method:** POST
-- **Header:** None
-- **Authentication:** None
-- **Body:**
-```Python
-	{
-		“aaaUser” : {
-			“attributes” : {
-				“name” : “username-for-APIC”,
-				“pwd” : “password-for-APIC”
-			}
+
+We’ll get into the specifics of the ACI API in the next module, for now let’s focus on the basics of creating and confirming a new Tenant and VRF. However, before we can do that we first have to login to the APIC.  To do so we will execute the following in Postman:
+
+```
+POST https://<IP-of-APIC>/api/aaLogin.json
+{
+	“aaaUser” : {
+		“attributes” : {
+			“name” : “username-for-APIC”,
+			“pwd” : “password-for-APIC”
 		}
 	}
+}
 ```
-The REST call in Postman should match the following:
+If you are new to using Postman, below is a diagram showcasing how to enter this REST call into the tool. Once complete, hit 'send':
  
 ![Postman-Login](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-Login.png)
 
 
 
-You can confirm the REST call was successful with the response Code.  In the picture below, the response code is the well-known value, 200 – indicating the REST call was successfully received and a response returned. 
+You can confirm the REST call was successful with the response Code.  In the picture below, the response (or status) code is the well-known value, 200 – indicating the REST call was successfully received and a response returned. There are a number of common status Codes you can expect when working in a REST framework, including:
+- Bad Request (400): Typically indicating a problem with the initial call 
+- Not Found (404): The Server cannot be found
+- Internal Server Error (500): The Server encountered an internal error
+- Service Unavailable (503): The Server is busy and/or the operation timed out.
+
 
 When a login message is accepted, the API returns a data structure that includes a session timeout period in seconds and a token that represents the session. The token is also returned as a cookie in the HTTP response header. 
  
@@ -133,14 +138,10 @@ When a login message is accepted, the API returns a data structure that includes
 
 To maintain your session, you must send login refresh messages to the API if no other messages are sent for a period longer than the session timeout period. To send a refresh message, execute the following in Postman:
 
-- **URL:** 
 ```
-	https://<IP-of-APIC>/api/aaaRefresh.json
+GET	https://<IP-of-APIC>/api/aaaRefresh.json
 ```
-- **Method:** GET
-- **Header:** None
-- **Authentication:** None
-- **Body:** None
+**Body:** none
 
 
 The response should include a status 200.
@@ -149,55 +150,39 @@ The response should include a status 200.
 
 Now that we have logged into the APIC, we’ll create a new Tenant named ‘ExampleApiTenant’ by executing the following call in Postman:
 
-- **URL:** 
 ```
-	https://<IP-of-APIC>/api/node/mo/uni.json
-```
-- **Method:** POST
-- **Header:** None
-- **Authentication:** None
-- **Body:** 
-```Python
-	{
-		"fvTenant" : {
-			"attributes: {
-				"name" : "ExampleApiTenant"
-			}
+POST https://<IP-of-APIC>/api/node/mo/uni.json
+
+{
+	"fvTenant" : {
+		"attributes: {
+			"name" : "ExampleApiTenant"
 		}
 	}
+}
 ```
 
 
 Check for a status 200 response from this previous command. If the REST call was successful, we can add a private-network instance, named ‘myVRF’ by executing the following command:
 
-- **URL:** 
 ```
-	https://<IP-of-APIC>/api/node/mo/uni/tn-ExampleApiTenant.json
-```
-- **Method:** POST
-- **Header:** None
-- **Authentication:** None
-- **Body:** 
-```Python
-	{
-		"fvCtx" : {
-			"attributes: {
-				"name" : "myVRF"
-			}
+POST https://<IP-of-APIC>/api/node/mo/uni/tn-ExampleApiTenant.json
+{
+	"fvCtx" : {
+		"attributes: {
+			"name" : "myVRF"
 		}
 	}
+}
 ```
 
 
 Similar to the CLI implementation, lets confirm that the Tenant and private-network were created.  First we can confirm the tenant by executing the following:
 - **URL:** 
 ```
-	https://<IP-of-APIC> /api/node/class/fvTenant.json?
+GET https://<IP-of-APIC> /api/node/class/fvTenant.json?
 ```
-- **Method:** GET
-- **Header:** None
-- **Authentication:** None
-- **Body:** None
+**Body:** None
 
 
 This API call should return a JSON model for each of the tenants in the APIC.  You should be able to note one of the results which contain a Distinguished Name (DN) with the value:
@@ -215,17 +200,13 @@ In this case it will be ‘uni/tn-ExampleApiTenant’.
 
 To confirm the private-network was created, execute the following:
 
-- **URL:** 
 ```
-	https://<IP-of-APIC> /api/node/mo/uni/tn-ExampleApiTenant/.json?query target=subtree&target-subtree-class=fvCtx
+GET	https://<IP-of-APIC> /api/node/mo/uni/tn-ExampleApiTenant/.json?query target=subtree&target-subtree-class=fvCtx
 ```
-- **Method:** GET
-- **Header:** None
-- **Authentication:** None
-- **Body:** None
+**Body:** None
 
 
-Again, we should see a JSON model in which the Distinguished Name containts:
+Again, we should see a JSON model in which the DN containts:
 
 ```
  	uni/tn-<name-of-tenant>/ctx-<name-of-private-network>
@@ -236,7 +217,7 @@ Again, we should see a JSON model in which the Distinguished Name containts:
 
 
 
-We have now successfully created a new Tenant and private-network using the APIC API.  In the next module explore these API calls in detail.
+We have now successfully created a new Tenant and private-network using the APIC API.  In the next module explore these API calls in greater detail.
 
 
 
