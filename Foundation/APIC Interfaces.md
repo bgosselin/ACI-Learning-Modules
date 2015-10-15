@@ -75,6 +75,7 @@ So, we can also very easily confirm that our ‘myVRF’ private-network was cre
 	ls /aci/tenants/ExampleCliTenant/networking/private-networks/
 ```
 
+Take a look at the file path to where this Private Network was created. It is actually a subfolder of the new Tenant we created.  This is expected since the Tenant 'contains' all the componenets of our network in ACI.
 
 
 
@@ -95,6 +96,7 @@ Click on ‘Proceed to <IP-of-APIC> (unsafe)’
  
 ![Postman-AcceptCert](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-AcceptCert.png)
 
+####Login To APIC####
 We can now open Postman browser add-on to execute a RESTful API call.  During this module and subsequent ones we will not included any headers in our REST calls.  Some of our calls will require a body (or payload) and some will note.  To represent these componenets of our REST commands, we will use the following formate:
 
 ```
@@ -104,7 +106,7 @@ We can now open Postman browser add-on to execute a RESTful API call.  During th
 } 
 ```
 
-We’ll get into the specifics of the ACI API in the next module, for now let’s focus on the basics of creating and confirming a new Tenant and VRF. However, before we can do that we first have to login to the APIC.  To do so we will execute the following in Postman:
+Note that are JavaScript Object Notation (JSON) to for the body or payload of the REST call.  ACI also supports Extensible Markup Lanuage (XML) in the body of the API as well. We’ll get into more specifics of the ACI API in the next module, for now let’s focus on the basics of creating and confirming a new Tenant and VRF with JSON as the body format. However, before we can do that we first have to login to the APIC.  To do so we will execute the following in Postman:
 
 ```
 POST https://<IP-of-APIC>/api/aaLogin.json
@@ -140,49 +142,52 @@ To maintain your session, you must send login refresh messages to the API if no 
 
 ```
 GET	https://<IP-of-APIC>/api/aaaRefresh.json
+no payload...
 ```
-**Body:** none
 
 
 The response should include a status 200.
 
 **Note** that if you do not send the next command before the session timeout, you will need to issue the login command again.
 
-Now that we have logged into the APIC, we’ll create a new Tenant named ‘ExampleApiTenant’ by executing the following call in Postman:
+####Create A Tenant and VRF with the API####
+Now that we have logged into the APIC, we’ll create a new Tenant named ‘ExampleApiTenant’. Unlike with the CLI, we can use the API to create as many managed object as we desire with the single call.  So in this example we will also create a new Private Network called 'myVRF' in the same REST call. We'll do so by executing the following call in Postman:
 
 ```
-POST https://<IP-of-APIC>/api/node/mo/uni.json
+POST https://<IP-of-APIC>/api/node/mo.json
 
 {
-	"fvTenant" : {
-		"attributes: {
-			"name" : "ExampleApiTenant"
-		}
+	"polUni": {
+      	"children":[{
+          	"fvTenant" : {
+              	"attributes" : {
+                  	"name" : "ExampleApiTenant"
+              	}
+              	"children": [{
+              		"fvCtx": {
+                        "attributes": {
+                            "name": "myVRF"
+                        }
+                    }
+              	}]
+          	}
+      	}]
 	}
 }
 ```
-
-
+You may notice a similarity between the structure of this JSON payload and the file structure we saw in the CLI interface.  As we previously learned, the private network is contained in the Tenant, thus it is labelled as a 'child' object of the Tenant.  In the same way we can that the Tenant is actually a child of the overall ACI system, known as the 'Policy Universe' (polUni).  We'll explore this hierarcical structure more in the next module.
+    
 Check for a status 200 response from this previous command. If the REST call was successful, we can add a private-network instance, named ‘myVRF’ by executing the following command:
 
-```
-POST https://<IP-of-APIC>/api/node/mo/uni/tn-ExampleApiTenant.json
-{
-	"fvCtx" : {
-		"attributes: {
-			"name" : "myVRF"
-		}
-	}
-}
-```
 
 
+####Confirm the New Tenant and VRF with the API####
 Similar to the CLI implementation, lets confirm that the Tenant and private-network were created.  First we can confirm the tenant by executing the following:
-- **URL:** 
 ```
 GET https://<IP-of-APIC> /api/node/class/fvTenant.json?
+no payload...
 ```
-**Body:** None
+
 
 
 This API call should return a JSON model for each of the tenants in the APIC.  You should be able to note one of the results which contain a Distinguished Name (DN) with the value:
@@ -202,8 +207,9 @@ To confirm the private-network was created, execute the following:
 
 ```
 GET	https://<IP-of-APIC> /api/node/mo/uni/tn-ExampleApiTenant/.json?query target=subtree&target-subtree-class=fvCtx
+no payload...
 ```
-**Body:** None
+
 
 
 Again, we should see a JSON model in which the DN containts:
@@ -217,7 +223,7 @@ Again, we should see a JSON model in which the DN containts:
 
 
 
-We have now successfully created a new Tenant and private-network using the APIC API.  In the next module explore these API calls in greater detail.
+We have now successfully created a new tenant and private-network using the APIC API.  In the next module explore these API calls in greater detail.
 
 
 
