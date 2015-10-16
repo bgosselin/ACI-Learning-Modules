@@ -184,7 +184,7 @@ Check for a status 200 response from this previous comman to ensure the REST cal
 ####Confirm the New Tenant and VRF with the API####
 Similar to the CLI implementation, lets confirm that the Tenant and private-network were created.  First we can confirm the tenant by executing the following:
 ```
-GET https://<IP-of-APIC> /api/node/class/fvTenant.json?
+GET https://<IP-of-APIC>/api/node/class/fvTenant.json?
 no payload...
 ```
 
