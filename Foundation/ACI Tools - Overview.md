@@ -3,10 +3,13 @@
 
 ##Learning Objectives##
 After Completing this module you will be able to:
+- Still to come...
 
 
 ##Tools For ACI##
-Unlike a traditional CLI, the APIC API is a well suited interface for building addtional functionality to further simplify our interactions with ACI.  We have already seen two example of this in the Graphic User interface (GUI) and Cobra SDK.  However, there are several other tools at our disposal to help us quickly develop scripts and programs for ACI.  We have already used one of these tools in the [API - Building A Simple Script](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/API%20-%20Building%20A%20Simple%20Script.md) module. However, there are several additional tools including:
+Unlike a traditional CLI, the APIC API is a well suited interface for building addtional functionality to further simplify our interactions with ACI.  We have already seen two example of this in the Graphic User interface (GUI) and Cobra SDK.  However, there are several other tools at our disposal to help us quickly develop scripts and programs for ACI. **Learning these tools can make our ACI programming experience much easier.** We have already used one of these tools in the [API - Building A Simple Script](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/API%20-%20Building%20A%20Simple%20Script.md) module - The API Inspector.  With the Inspector we were able to execute configuration commands in the GUI and see the corresponding RESTful API call. When in doubt about to accomplish a certain task via the API, this inspection tool can be a resource to discover how to structure the call. 
+
+There are several additional and equal useful resources at our disposal, including:
  - Arya
  - Visore
  - ACI Toolkit
