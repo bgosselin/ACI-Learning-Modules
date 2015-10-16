@@ -14,14 +14,14 @@ After Completing this module you will be able to:
 
 ##ACI Interfaces##
 
-Application Centric Infrastructure (ACI) provides a centralized approach to network fabric operation.  All components of the fabric – spine and leaf switches – as well as network services and certain VM management features can be provisioned and managed solely from the Application Policy Infrastructure Controller (APIC).  While operators can connect to individual fabric nodes, one of the key features of ACI is to provide a single access point for status, provisioning, configuration and troubleshooting to greatly simplify the network engineer’s ability to manage the network. 
+Application Centric Infrastructure (ACI) provides a centralized approach to network fabric operation.  All components of the fabric – spine and leaf switches – as well as network services and certain VM management features can be provisioned and managed solely from the Application Policy Infrastructure Controller (APIC).  While operators can connect to individual fabric nodes, one of the key features of ACI is to provide a single access point via the APIC controller for status, provisioning, configuration and troubleshooting, greatly simplifying network management. 
 
-There are three primary ways to access the APIC
+There are three primary ways for users to access APIC controller:
 - Command Line Interface (CLI)
 - Application Program Interface (API)
 - Graphic User Interface (GUI)
 
-Note that while there are three ways to access the APIC, there is actually only two interfaces, the CLI and API.  The GUI is actually a separate Web-based application hosted on the APIC which leverage the API to interface with the internal data model housed in the controller. We’ll discuss both the CLI and API this module but focus on the API going forward.
+Note that while there are three ways to access the APIC, there is actually only two interfaces, the CLI and API.  The GUI is actually a separate Web-based application hosted on the APIC which leverages the API to interface with the internal data model housed in the controller. We’ll discuss both the CLI and API this module but focus on the API going forward.
  
 ![APIC-Interfaces](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/APIC-Interfaces.png)
 
@@ -32,7 +32,7 @@ Note that while there are three ways to access the APIC, there is actually only 
 
 Network Engineers have a great deal of experience in using a CLI to interact with network equipment.  While the commands and features of ACI differ from traditional switch operating systems, such as IOS or NX-OS, the method of interaction is the same.
 
-To highlight this interface, we will log into the APIC and create a new VRF instance in ACI. In ACI, VRF’s are known as ‘Private Networks’ and they contained within a Tenant. Tenants in ACI define a logically separate space for both networks and operation.  Each tenant contains its own networks on a separate Virtual Routing Forwarding instance. At this time we’ll just create an empty VRF inside a tenant to show case the use of the CLI.
+To highlight this interface, we will log into the APIC and create a new VRF instance. In ACI, VRF’s are known as ‘Private Networks’ and they are contained within a Tenant. Tenants in ACI define a logically separate space for networks and network administration.  Each tenant contains its own networks on a separate Virtual Routing Forwarding instance. At this time we’ll just create an empty VRF inside a tenant to showcase the use of the CLI.
 
 - Open an SSH client, such as SecureCRT or Putty, and establish an SSH session with one of the IP addresses in the APIC cluster. 
 - Provide the Username and password for your APIC
@@ -43,13 +43,13 @@ Once logged in, you will see the command prompt for the APIC:
 
 
 
-First, we’ll create a new tenant called ‘ExampleCliTenant’.  To do so we’ll navigate to the tenants directory on the APIC. Once in the folder we’ll create this tenant as a new managed object and commit this configuration. We’ll discuss managed objects in more detail in the next module, for now we’ll just focus on the interfaces.
+First, we’ll create a new tenant called ‘ExampleCliTenant’.  To do so we’ll navigate to the tenant's directory on the APIC. Once in the folder we’ll create this tenant as a new managed object and commit this configuration. We’ll discuss managed objects in more detail in the next module, for now we’ll just focus on the interfaces.
  
 ![CLI-CreateTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-CreateTenant.png)
 
 
 
-Now that the tenant had been created in the APIC, we will change directories in the APIC to the private-network folder where will create a new private network (or VRF). Just as with the tenant, we will create it as a managed object and commit this configuration to the controller.
+Now that the tenant had been created in the APIC, we will change directories in the APIC to the private-network folder where we'll create a new private network (or VRF). Just as with the tenant, we will create it as a managed object and commit this configuration to the controller.
  
 ![CLI-CreateVRF](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-CreateVRF.png)
 
@@ -63,7 +63,7 @@ We can confirm the tenant has been created with the following:
 
 
 
-Issuing this command in the SSH client, we see that we are actually just using the Linux command to view the contents of the Tenants directory in the APIC
+Issuing this command in the SSH client, we see that we are actually just using the Linux command to view the contents of the Tenants directory in the APIC.
     
 ![CLI-ShowTenant](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/CLI-ShowTenant.png)
 
@@ -75,7 +75,7 @@ So, we can also very easily confirm that our ‘myVRF’ private-network was cre
 	ls /aci/tenants/ExampleCliTenant/networking/private-networks/
 ```
 
-Take a look at the file path to where this Private Network was created. It is actually a subfolder of the new Tenant we created.  This is expected since the Tenant 'contains' all the componenets of our network in ACI.
+Take a look at the file path to where this Private Network was created. It is actually a subfolder of our new Tenant.  This is expected since the Tenant 'contains' all the componenets of our network in ACI.
 
 
 
@@ -83,7 +83,7 @@ Take a look at the file path to where this Private Network was created. It is ac
 
 Just as with the CLI, the API exposes full access to the APIC for configuration, management, operation, troubleshooting and more.  The APIC API is REST-based which offers several advantages over the CLI when creating scripts and programs to interact with ACI.  For the purposes of this module, we’ll assume basic knowledge of RESTful API’s. However, a detailed discussion of REST API’s is available in the Coding 101 DevNet Lab, [here]( https://learninglabs.cisco.com/lab/aci/step/1). 
 
-We can showcase APIC interaction with the API by creating another tenant and VRF in the fabric.  Just as there are several tools which can be used to access the Command Line Interface of a device, we have a variety of options for API access as well.  We can access the API directly from a script or program. However, for testing and learning a new API, it is often helpful to use a REST client to explicitly see the API call and response. For this purpose we’ll use Postman, a Google Chrome browser plugin. For Instructions on how to install and use Postman are available in the Coding 101 DevNet Lab, [here]( https://learninglabs.cisco.com/lab/aci/step/1). These instructions demonstrate Postman using the APIC-EM API, not ACI. Since REST is not a protocol but a framework, no two RESTful API’s are identical.  Nevertheless, there are many similarities between these two API’s and minor differences will be addressed as we as we use Postman, below.
+We can showcase APIC interaction with the API by creating another tenant and VRF in the fabric.  Just as there are several tools which can be used to access the Command Line Interface of a device, we have a variety of options for API access as well.  We can access the API directly from a script or program. However, for testing and learning a new API, it is often helpful to use a REST client to explicitly see the API call and response. For this purpose we’ll use Postman, a Google Chrome browser plugin. Instructions on how to install and use Postman are available in the Coding 101 DevNet Lab, [here]( https://learninglabs.cisco.com/lab/aci/step/1). These instructions demonstrate Postman using the APIC-EM API, not ACI. Since REST is not a protocol but a framework, no two RESTful API’s are identical.  Nevertheless, there are many similarities between these two API’s and minor differences will be addressed as we as we use Postman, below.
 
 Note, before using Postman with the APIC, it may be necessary to accept the APIC’s self-signed SSL certificate in your Chrome browser. Do so by opening your chrome browser and navigate here:
 
@@ -96,8 +96,8 @@ Click on ‘Proceed to <IP-of-APIC> (unsafe)’
  
 ![Postman-AcceptCert](https://github.com/bgosselin/ACI-Learning-Modules/blob/master/Foundation/APIC%20Interfaces%20-%20Pictures/Postman-AcceptCert.png)
 
-####Login To APIC####
-We can now open Postman browser add-on to execute a RESTful API call.  During this module and subsequent ones we will not included any headers in our REST calls.  Some of our calls will require a body (or payload) and some will note.  To represent these componenets of our REST commands, we will use the following formate:
+####Login to the APIC####
+We can now open the Postman browser add-on to execute a RESTful API call.  During this module and subsequent ones we will not included any headers in our REST calls from Postman.  Some of our calls will require a body (or payload) and some will not.  To represent these components of our REST commands, we will use the following format:
 
 ```
 <HTTP verb (GET, POST, PUT, DELETE)> <URL>
@@ -106,7 +106,7 @@ We can now open Postman browser add-on to execute a RESTful API call.  During th
 } 
 ```
 
-Note that are JavaScript Object Notation (JSON) to for the body or payload of the REST call.  ACI also supports Extensible Markup Lanuage (XML) in the body of the API as well. We’ll get into more specifics of the ACI API in the next module, for now let’s focus on the basics of creating and confirming a new Tenant and VRF with JSON as the body format. However, before we can do that we first have to login to the APIC.  To do so we will execute the following in Postman:
+Note that we are using JavaScript Object Notation (JSON) for the body or payload of the REST call.  ACI also supports Extensible Markup Lanuage (XML) in the body of the API as well. We’ll get into more specifics of the ACI API in the next module, for now let’s focus on the basics of creating and confirming a new Tenant and VRF with JSON as the body format. However, before we can do that we first have to login to the APIC.  To do so we will execute the following in Postman:
 
 ```
 POST https://<IP-of-APIC>/api/aaLogin.json
@@ -151,7 +151,7 @@ The response should include a status 200.
 **Note** that if you do not send the next command before the session timeout, you will need to issue the login command again.
 
 ####Create A Tenant and VRF with the API####
-Now that we have logged into the APIC, we’ll create a new Tenant named ‘ExampleApiTenant’. Unlike with the CLI, we can use the API to create as many managed object as we desire with the single call.  So in this example we will also create a new Private Network called 'myVRF' in the same REST call. We'll do so by executing the following call in Postman:
+Now that we have logged into the APIC, we’ll create a new Tenant named ‘ExampleApiTenant’. Unlike with the CLI, we can use the API to create as many managed object as we desire with a single API command.  So in this example we will also create a new Private Network called 'myVRF' in the same REST call. We'll do so by executing the following in Postman:
 
 ```
 POST https://<IP-of-APIC>/api/node/mo.json
@@ -175,9 +175,9 @@ POST https://<IP-of-APIC>/api/node/mo.json
 	}
 }
 ```
-You may notice a similarity between the structure of this JSON payload and the file structure we saw in the CLI interface.  As we previously learned, the private network is contained in the Tenant, thus it is labelled as a 'child' object of the Tenant.  In the same way we can that the Tenant is actually a child of the overall ACI system, known as the 'Policy Universe' (polUni).  We'll explore this hierarcical structure more in the next module.
+You may notice a similarity between the structure of this JSON payload and the file structure we saw in the CLI interface.  As we previously learned, the private network is contained in the Tenant, thus it is labelled as a 'child' object of the Tenant.  In the same way we can see that the Tenant is actually a child of the overall ACI system, known as the 'Policy Universe' (polUni).  We'll explore this hierarcical structure more in the next module.
     
-Check for a status 200 response from this previous command. If the REST call was successful, we can add a private-network instance, named ‘myVRF’ by executing the following command:
+Check for a status 200 response from this previous comman to ensure the REST call was successful.
 
 
 
@@ -212,7 +212,7 @@ no payload...
 
 
 
-Again, we should see a JSON model in which the DN containts:
+Again, we should see a JSON model in which the DN contains:
 
 ```
  	uni/tn-<name-of-tenant>/ctx-<name-of-private-network>
@@ -230,4 +230,4 @@ We have now successfully created a new tenant and private-network using the APIC
 
 ##Graphic User Interface##
 
-The last interface for the APIC is the Graphic User Interface (GUI).  As mentioned earlier, the GUI actually leverages the API.  Since this lab is focused on API interaction with the APIC, we won’t go through all of the steps to create a new tenant and private-network in the GUI.  For more information on GUI configurations please see the ‘Cisco APIC Getting Started Guide, available [here]( http://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/sw/1-x/getting-started/b_APIC_Getting_Started_Guide.pdf). 
+The last interface for the APIC is the Graphic User Interface (GUI).  As mentioned earlier, the GUI actually a web-based program which leverages the API to access the APIC.  Since this lab is focused on API interaction with the APIC, we won’t go through all of the steps to create a new tenant and private-network in the GUI.  For more information on GUI configurations please see the ‘Cisco APIC Getting Started Guide, available [here]( http://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/sw/1-x/getting-started/b_APIC_Getting_Started_Guide.pdf). 
