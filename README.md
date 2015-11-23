@@ -1,6 +1,6 @@
 #ACI Learning Modules#
 
-Contributions to these Learning Modules are very much welcome. However please keep in mind the following guidelines:
+Contributions to these Learning Modules are welcome. However please keep in mind the following guidelines:
 - All contributions should be example-intensive with lots of specific code snippets, pictures and diagrams. The goal of these learning labs is to ensure a 'hands-on' learning approach rather than just theory or instructions.  
 - Note that contributions to these learning modules will be posted for public consumption. As such, you must ensure you have the rights to provide any contributed content.
 - All modules are written in Markdown.  See below for helpful links and editors to improve your Markdown skills.
