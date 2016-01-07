@@ -1,10 +1,10 @@
 {
   "labId": "aci",
-  "title": "ACI APIs using Python and REST",
-  "slug": "Learn about the Application Centric Infrastructure (ACI) and the underlying Application Policy Infrastructure Controller (APIC) using the Python ACIToolkit library and the Postman plugin for Chrome.",
+  "title": "ACI Toolkit",
+  "slug": "Learn about the Application Centric Infrastructure (ACI) and the underlying Application Policy Infrastructure Controller (APIC) using the Python ACIToolkit library.",
   "time": "30",
   "tags": [
-    {"title": "ACI"},
+    {"title": "ACI Toolkit"},
     {"title": "Data Center"},
     {"title": "SDN"}
   ],
