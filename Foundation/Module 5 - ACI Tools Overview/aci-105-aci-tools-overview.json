@@ -1,10 +1,9 @@
 {
-  "labId": "acitoolkit",
-  "title": "ACI Toolkit",
-  "slug": "Learn about the Application Centric Infrastructure (ACI) and the Python ACIToolkit library.",
-  "time": "15",
+  "labId": "aci-105-aci-Tools-Overview",
+  "title": "ACI 105 - ACI Tools Overview",
+  "slug": "An overview on the various tools available to control your network via ACI.",
+  "time": 20
   "tags": [
-    {"title": "ACI Toolkit"},
     {"title": "Data Center"},
     {"title": "SDN"}
   ],
