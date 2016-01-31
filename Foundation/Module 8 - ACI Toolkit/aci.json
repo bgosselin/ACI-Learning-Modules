@@ -1,8 +1,8 @@
 {
-  "labId": "aci",
+  "labId": "acitoolkit",
   "title": "ACI Toolkit",
-  "slug": "Learn about the Application Centric Infrastructure (ACI) and the underlying Application Policy Infrastructure Controller (APIC) using the Python ACIToolkit library.",
-  "time": "30",
+  "slug": "Learn about the Application Centric Infrastructure (ACI) and the Python ACIToolkit library.",
+  "time": "15",
   "tags": [
     {"title": "ACI Toolkit"},
     {"title": "Data Center"},
